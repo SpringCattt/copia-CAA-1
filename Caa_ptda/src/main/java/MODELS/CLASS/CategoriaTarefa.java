@@ -1,0 +1,34 @@
+package MODELS.CLASS;
+
+public class CategoriaTarefa {
+
+    /* 
+     * Atributos Categoria Tarefa
+     */
+
+    private int IdCategoriaTarefa;
+    private String Nome;
+
+    /* 
+     * Getters e Setters
+     */
+    public int getIdCategoriaTarefa() {
+        return IdCategoriaTarefa;
+    }
+
+    public void setIdCategoriaTarefa(int IdCategoriaTarefa) {
+        this.IdCategoriaTarefa = IdCategoriaTarefa;
+    }
+
+    public String getNome() {
+        return Nome;
+    }
+
+    public void setNome(String Nome) {
+        this.Nome = Nome;
+    }
+
+    /* 
+     * Funções da categoria da tarefa
+     */
+}
