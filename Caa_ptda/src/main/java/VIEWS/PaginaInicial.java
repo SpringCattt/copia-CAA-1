@@ -829,18 +829,24 @@ public class PaginaInicial extends javax.swing.JFrame {
         jPanel2.revalidate(); // Atualiza
         jPanel2.repaint();    // Desenha
     }
-    
+
     // Método público para ser chamado pelos botões "Adicionar"
-    public void irParaFormularioFuncionarios(){
+    public void irParaFormularioFuncionarios() {
         //Cria o painel do formulário
         PanelFormularioFuncionario form = new PanelFormularioFuncionario(this);
         trocarParaPainel(form);
     }
-    
-    public void mostrarListaFuncionarios(){
+
+    public void irParaFormularioEventos() {
+        //Cria o painel do evento
+        PanelFormularioEventos form = new PanelFormularioEventos(this);
+        trocarParaPainel(form);
+    }
+
+    public void mostrarListaFuncionarios() {
         //Instancia o painel da lista
         PanelListaFuncionarios lista = new PanelListaFuncionarios(this);
-        
+
         //troca o painel
         trocarParaPainel(lista);
     }

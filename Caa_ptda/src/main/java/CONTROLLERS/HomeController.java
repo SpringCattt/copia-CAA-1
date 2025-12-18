@@ -1,5 +1,6 @@
 package CONTROLLERS;
 
+import java.util.List;
 import MODELS.CLASS.Trabalhador;
 import MODELS.CLASS.Credenciais;
 import MODELS.DAO.TrabalhadorDAO;
@@ -8,10 +9,15 @@ public class HomeController {
 
     private TrabalhadorDAO trabalhadorDAO;
     private CredenciaisDAO credenciaisDAO;
+    
+    public List<Trabalhador> obterTodosFuncionarios() {
+        return trabalhadorDAO.getAllTrabalhadores();
+    }
 
     public HomeController() {
         this.trabalhadorDAO = new TrabalhadorDAO();
         this.credenciaisDAO = new CredenciaisDAO();
+        
     }
 
     public boolean criarFuncionario(

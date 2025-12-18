@@ -13,6 +13,6 @@ public class BaseDados {
     if(con == null || con.isClosed()){ 
         con = DriverManager.getConnection(URL, USER, PASSWORD);
         }
-    return con;
+    return con; 
     }
 }

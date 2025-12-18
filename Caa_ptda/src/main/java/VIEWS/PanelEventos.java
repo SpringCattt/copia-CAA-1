@@ -121,6 +121,10 @@ public class PanelEventos extends javax.swing.JPanel {
         );*/
 
         //dispose();
+        
+        if(janelaPrincipal != null){
+            janelaPrincipal.irParaFormularioEventos();
+        }
     }//GEN-LAST:event_btnCriarActionPerformed
 
 

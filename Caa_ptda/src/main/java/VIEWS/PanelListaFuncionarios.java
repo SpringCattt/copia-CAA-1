@@ -4,6 +4,10 @@
  */
 package VIEWS;
 
+import CONTROLLERS.HomeController;
+import MODELS.CLASS.Trabalhador;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author gonca
@@ -12,6 +16,7 @@ public class PanelListaFuncionarios extends javax.swing.JPanel {
 
     //variável para guardar a referência da janela principal
     private PaginaInicial janelaPrincipal;
+    private HomeController controller;
     /**
      * Creates new form ListaFuncionarios
      */
@@ -20,7 +25,31 @@ public class PanelListaFuncionarios extends javax.swing.JPanel {
     public PanelListaFuncionarios(PaginaInicial paginaInicial) {
         // Guarda a referência na variável que criámos em cima
         this.janelaPrincipal = paginaInicial;
+        this.controller = new HomeController();
         initComponents();
+        
+        carregarDadosTabela();
+    }
+    
+    private void carregarDadosTabela() {
+        // obtem o modelo da BD para alterar
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        
+        // limpa a tabela pra evitar duplicados
+        modelo.setRowCount(0);
+        
+        // pede a lista de funcionarios ao controller
+        List<Trabalhador> lista = controller.obterTodosFuncionarios();
+        
+        // mete os funcionarios na lista
+        for (Trabalhador t : lista) {
+            modelo.addRow(new Object[]{
+                t.getIdTrabalhador(),
+                t.getNome(),
+                t.getEmailPessoal(),
+                t.getCategoria()
+            });
+        }
     }
 
     /**
