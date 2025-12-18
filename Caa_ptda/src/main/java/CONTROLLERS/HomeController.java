@@ -4,7 +4,6 @@ import MODELS.CLASS.Trabalhador;
 import MODELS.CLASS.Credenciais;
 import MODELS.DAO.TrabalhadorDAO;
 import MODELS.DAO.CredenciaisDAO;
-
 public class HomeController {
 
     private TrabalhadorDAO trabalhadorDAO;
