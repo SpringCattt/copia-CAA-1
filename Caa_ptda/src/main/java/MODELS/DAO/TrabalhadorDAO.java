@@ -1,4 +1,5 @@
 package MODELS.DAO;
+
 import MODELS.CLASS.Trabalhador; // Assumindo esta classe existe
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,17 +11,16 @@ public class TrabalhadorDAO {
         Trabalhador t = new Trabalhador();
         t.setIdTrabalhador(rs.getInt("IdTrabalhador"));
         t.setNome(rs.getString("Nome"));
-        t.setCategoria(rs.getInt("Categoria")); // Chave estrangeira
+        t.setCategoria(rs.getInt("Categoria"));
         t.setEmailPessoal(rs.getString("Email"));
-        t.setAtividade(rs.getBoolean("Atividade"));
+        t.setAtivo(rs.getBoolean("Ativo"));
         return t;
     }
 
     // ---- SELECT (um trabalhador) ----
     public Trabalhador getTrabalhadorById(int id) {
         String sql = "SELECT * FROM Trabalhador WHERE IdTrabalhador = ?";
-        try (Connection conn = BaseDados.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = BaseDados.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -35,14 +35,29 @@ public class TrabalhadorDAO {
         return null;
     }
 
+    public boolean isTrabalhadorAtivo(int id) {
+        String sql = "SELECT Ativo FROM Trabalhador WHERE IdTrabalhador = ?";
+
+        try (Connection conn = BaseDados.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getBoolean("Ativo");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     // ---- SELECT (todos os trabalhadores) ----
     public List<Trabalhador> getAllTrabalhadores() {
         List<Trabalhador> trabalhadores = new ArrayList<>();
         String sql = "SELECT * FROM Trabalhador";
 
-        try (Connection conn = BaseDados.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+        try (Connection conn = BaseDados.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 trabalhadores.add(mapResultSetToTrabalhador(rs));
@@ -57,16 +72,15 @@ public class TrabalhadorDAO {
 
     // ---- INSERT ----
     public long insertTrabalhador(Trabalhador trabalhador) {
-        String SQL = "INSERT INTO Trabalhador (Nome, Categoria, Email, Atividade) VALUES (?, ?, ?, ?)";
+        String SQL = "INSERT INTO Trabalhador (Nome, Categoria, Email, Ativo) VALUES (?, ?, ?, ?)";
         long generatedId = -1;
 
-        try (Connection conn = BaseDados.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conn = BaseDados.getConnection(); PreparedStatement stmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, trabalhador.getNome());
             stmt.setInt(2, trabalhador.getCategoria());
             stmt.setString(3, trabalhador.getEmailPessoal());
-            stmt.setBoolean(4, trabalhador.isAtividade());
+            stmt.setBoolean(4, trabalhador.isAtivo());
 
             int affectedRows = stmt.executeUpdate();
 
@@ -87,15 +101,14 @@ public class TrabalhadorDAO {
 
     // ---- UPDATE ----
     public boolean updateTrabalhador(Trabalhador trabalhador) {
-        String SQL = "UPDATE Trabalhador SET Nome = ?, Categoria = ?, Email = ?, Atividade = ? WHERE IdTrabalhador = ?";
+        String SQL = "UPDATE Trabalhador SET Nome = ?, Categoria = ?, Email = ?, Ativo = ? WHERE IdTrabalhador = ?";
 
-        try (Connection conn = BaseDados.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(SQL)) {
+        try (Connection conn = BaseDados.getConnection(); PreparedStatement stmt = conn.prepareStatement(SQL)) {
 
             stmt.setString(1, trabalhador.getNome());
             stmt.setInt(2, trabalhador.getCategoria());
             stmt.setString(3, trabalhador.getEmailPessoal());
-            stmt.setBoolean(4, trabalhador.isAtividade());
+            stmt.setBoolean(4, trabalhador.isAtivo());
             stmt.setInt(5, trabalhador.getIdTrabalhador());
 
             return stmt.executeUpdate() > 0;

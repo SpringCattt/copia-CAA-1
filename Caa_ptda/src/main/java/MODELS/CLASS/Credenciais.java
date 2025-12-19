@@ -8,7 +8,7 @@ public class Credenciais {
 
     public Credenciais() {}
 
-    public Credenciais(int idTrabalhador, String email, String password) {
+    public Credenciais(int idTrabalhador, String email, String password, boolean atividade) {
         this.idTrabalhador = idTrabalhador;
         this.email = email;
         this.password = password;
@@ -37,4 +37,5 @@ public class Credenciais {
     public void setPassword(String password) {
         this.password = password;
     }
+    
 }

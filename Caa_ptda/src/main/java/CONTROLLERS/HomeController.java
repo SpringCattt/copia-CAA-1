@@ -1,28 +1,29 @@
 package CONTROLLERS;
 
-import java.util.List;
+import MODELS.CLASS.CategoriaTrabalho;
 import MODELS.CLASS.Trabalhador;
 import MODELS.CLASS.Credenciais;
+import MODELS.DAO.CategoriaTrabalhoDAO;
 import MODELS.DAO.TrabalhadorDAO;
 import MODELS.DAO.CredenciaisDAO;
+import java.util.List;
+
 public class HomeController {
 
     private TrabalhadorDAO trabalhadorDAO;
     private CredenciaisDAO credenciaisDAO;
-    
-    public List<Trabalhador> obterTodosFuncionarios() {
-        return trabalhadorDAO.getAllTrabalhadores();
-    }
+    private CategoriaTrabalhoDAO categoriaTrabalhoDAO;
 
     public HomeController() {
         this.trabalhadorDAO = new TrabalhadorDAO();
         this.credenciaisDAO = new CredenciaisDAO();
-        
+        this.categoriaTrabalhoDAO = new CategoriaTrabalhoDAO();
     }
 
     public boolean criarFuncionario(
             String nome,
-            String email,
+            String emailpessoal,
+            String emailempresa,
             String password,
             int categoria,
             boolean atividade
@@ -30,9 +31,8 @@ public class HomeController {
         // Criar trabalhador
         Trabalhador t = new Trabalhador();
         t.setNome(nome);
-        t.setEmailPessoal(email);
+        t.setEmailPessoal(emailpessoal);
         t.setCategoria(categoria);
-        t.setAtividade(atividade);
 
         long idGerado = trabalhadorDAO.insertTrabalhador(t);
 
@@ -44,7 +44,7 @@ public class HomeController {
         // Criar Credenciais
         Credenciais c = new Credenciais();
         c.setIdTrabalhador((int) idGerado);
-        c.setEmail(email);
+        c.setEmail(emailempresa);
         c.setPassword(password);
 
         boolean credOk = credenciaisDAO.insertCredenciais(c);
@@ -56,5 +56,26 @@ public class HomeController {
 
         System.out.println("Funcionário criado com sucesso (ID " + idGerado + ")");
         return true;
+    }
+
+    public List<CategoriaTrabalho> getCategoriasTrabalho() {
+        return categoriaTrabalhoDAO.getCategoriasTrabalho();
+    }
+
+    public boolean verificarDuplicidadeEmail(String email) {
+        return credenciaisDAO.existeEmail(email);
+    }
+
+    public Integer efetuarLogin(String email, String password) {
+        return credenciaisDAO.validarLogin(email, password);
+    }
+
+    public boolean verificarAtividadeTrabalhador(int id) {
+        return trabalhadorDAO.isTrabalhadorAtivo(id);
+    }
+
+    public Trabalhador procurarTrabalhador(int id) {
+        
+        return trabalhadorDAO.getTrabalhadorById(id);
     }
 }

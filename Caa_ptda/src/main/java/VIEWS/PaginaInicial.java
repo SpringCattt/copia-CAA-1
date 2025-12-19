@@ -1,5 +1,7 @@
 package VIEWS;
 
+import CONTROLLERS.HomeController;
+import MODELS.CLASS.Trabalhador;
 import java.awt.BorderLayout;
 import java.awt.*;
 import javax.swing.*;
@@ -18,10 +20,23 @@ public class PaginaInicial extends javax.swing.JFrame {
     private JLabel labelTextoSelecionado = null;
     private String iconNormalSelecionado = null;
     private String linkN, linkP;
+    private int idTrabalhador;
+    private HomeController controller;
+
+    public PaginaInicial(int idTrabalhador) {
+        estiloJanela();
+        initComponents();
+
+        this.idTrabalhador = idTrabalhador;
+
+        this.controller = new HomeController();
+    }
 
     public PaginaInicial() {
         estiloJanela();
         initComponents();
+
+        this.controller = new HomeController();
     }
 
     public void estiloJanela() {
@@ -709,36 +724,57 @@ public class PaginaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_imagemBotaoDashboardMousePressed
 
     private void labelBotaoFuncionariosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelBotaoFuncionariosMousePressed
-        linkN = "src/main/java/Recursos/funcionarios.png";
-        linkP = "src/main/java/Recursos/funcionarios_p.png";
-        labelPagina.setText("Funcionarios");
-        selecionarPainel(panelBotaoFuncionarios, imagemBotaoFuncionarios, labelBotaoFuncionarios, linkN, linkP);
+        boolean flag = verificarAcesso(5);
+        if (flag == true) {
+            linkN = "src/main/java/Recursos/funcionarios.png";
+            linkP = "src/main/java/Recursos/funcionarios_p.png";
+            labelPagina.setText("Funcionarios");
+            selecionarPainel(panelBotaoFuncionarios, imagemBotaoFuncionarios, labelBotaoFuncionarios, linkN, linkP);
 
-        limparPainelCentral();
+            limparPainelCentral();
 
-        trocarParaPainel(new PanelListaFuncionarios(this));
+            trocarParaPainel(new PanelListaFuncionarios(this));
+        }
     }//GEN-LAST:event_labelBotaoFuncionariosMousePressed
 
     private void panelBotaoSalasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBotaoSalasMousePressed
-        linkN = "src/main/java/Recursos/salas.png";
-        linkP = "src/main/java/Recursos/salas_p.png";
-        labelPagina.setText("Salas");
-        selecionarPainel(panelBotaoSalas, imagemBotaoSalas, labelBotaoSalas, linkN, linkP);
+        boolean flag = verificarAcesso(4);
+        if (flag == true) {
+            linkN = "src/main/java/Recursos/salas.png";
+            linkP = "src/main/java/Recursos/salas_p.png";
+            labelPagina.setText("Salas");
+            selecionarPainel(panelBotaoSalas, imagemBotaoSalas, labelBotaoSalas, linkN, linkP);
 
-        limparPainelCentral();
+            limparPainelCentral();
 
-        trocarParaPainel(new PanelSalas(this));
+            trocarParaPainel(new PanelSalas(this));
+        } else {
+            flag = verificarAcesso(2);
+            if (flag == true) {
+                linkN = "src/main/java/Recursos/salas.png";
+                linkP = "src/main/java/Recursos/salas_p.png";
+                labelPagina.setText("Salas");
+                selecionarPainel(panelBotaoSalas, imagemBotaoSalas, labelBotaoSalas, linkN, linkP);
+
+                limparPainelCentral();
+
+                trocarParaPainel(new PanelSalas(this));
+            }
+        }
     }//GEN-LAST:event_panelBotaoSalasMousePressed
 
     private void labelBotaoEventosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelBotaoEventosMousePressed
-        linkN = "src/main/java/Recursos/eventos.png";
-        linkP = "src/main/java/Recursos/eventos_p.png";
-        labelPagina.setText("Eventos");
-        selecionarPainel(panelBotaoEventos, imagemBotaoEventos, labelBotaoEventos, linkN, linkP);
+        boolean flag = verificarAcesso(2);
+        if (flag == true) {
+            linkN = "src/main/java/Recursos/eventos.png";
+            linkP = "src/main/java/Recursos/eventos_p.png";
+            labelPagina.setText("Eventos");
+            selecionarPainel(panelBotaoEventos, imagemBotaoEventos, labelBotaoEventos, linkN, linkP);
 
-        limparPainelCentral();
+            limparPainelCentral();
 
-        trocarParaPainel(new PanelEventos(this));
+            trocarParaPainel(new PanelEventos(this));
+        }
     }//GEN-LAST:event_labelBotaoEventosMousePressed
 
     private void imagemBotaoFinanceiroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imagemBotaoFinanceiroMousePressed
@@ -748,6 +784,8 @@ public class PaginaInicial extends javax.swing.JFrame {
         selecionarPainel(panelBotaoFinanceiro, imagemBotaoFinanceiro, labelBotaoFinanceiro, linkN, linkP);
 
         limparPainelCentral();
+
+        trocarParaPainel(new PanelFinanceiro(this));
     }//GEN-LAST:event_imagemBotaoFinanceiroMousePressed
 
     private void imagemBotaoRecursosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imagemBotaoRecursosMousePressed
@@ -757,6 +795,8 @@ public class PaginaInicial extends javax.swing.JFrame {
         selecionarPainel(panelBotaoRecursos, imagemBotaoRecursos, labelBotaoRecursos, linkN, linkP);
 
         limparPainelCentral();
+
+        trocarParaPainel(new PanelRecursos(this));
     }//GEN-LAST:event_imagemBotaoRecursosMousePressed
 
     private void labelBotaoDefinicoesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelBotaoDefinicoesMousePressed
@@ -821,6 +861,34 @@ public class PaginaInicial extends javax.swing.JFrame {
         jPanel2.repaint();
     }
 
+    private boolean verificarAcesso(int categoria) {
+        Trabalhador t = controller.procurarTrabalhador(idTrabalhador);
+
+        if (t != null) {
+
+            if (t.getCategoria() == categoria) {
+                return true;
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(
+                        this,
+                        "O utilizador não tem permissão para aceder a esta aba",
+                        "Erro",
+                        javax.swing.JOptionPane.ERROR_MESSAGE
+                );
+            }
+
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Trabalhador não encontrado!",
+                    "Erro",
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+            return false;
+        }
+        return false;
+    }
+
     // Método genérico que troca o conteúdo do jPanel2 por qualquer painel que lhe dês
     private void trocarParaPainel(javax.swing.JPanel novoPainel) {
         jPanel2.removeAll(); // Limpa
@@ -837,15 +905,62 @@ public class PaginaInicial extends javax.swing.JFrame {
         trocarParaPainel(form);
     }
 
+    public void irParaEditarFuncionario(String id, String nome, String email, String categoria) {
+        //Cria o painel do formulário
+        PanelFormularioFuncionario form = new PanelFormularioFuncionario(this);
+
+        //Chama o método que criámos acima para preencher os dados e mudar o título
+        form.preencherDadosParaEdicao(id, nome, email, categoria);
+
+        //Troca o painel
+        trocarParaPainel(form);
+    }
+
     public void irParaFormularioEventos() {
         //Cria o painel do evento
         PanelFormularioEventos form = new PanelFormularioEventos(this);
         trocarParaPainel(form);
     }
 
+    public void irParaFormularioRecursos() {
+        //Cria o painel do formulario do recurso
+        PanelFormularioRecursos form = new PanelFormularioRecursos(this);
+        trocarParaPainel(form);
+    }
+
+    public void irParaFormularioFinanceiro() {
+        //Cria o painel do formulario do recurso
+        PanelFormularioFinanceiro form = new PanelFormularioFinanceiro(this);
+        trocarParaPainel(form);
+    }
+
     public void mostrarListaFuncionarios() {
         //Instancia o painel da lista
         PanelListaFuncionarios lista = new PanelListaFuncionarios(this);
+
+        //troca o painel
+        trocarParaPainel(lista);
+    }
+
+    public void mostrarListaEventos() {
+        //Instancia o painel da lista
+        PanelEventos lista = new PanelEventos(this);
+
+        //troca o painel
+        trocarParaPainel(lista);
+    }
+
+    public void mostrarListaRecursos() {
+        //Instancia o painel da lista
+        PanelRecursos lista = new PanelRecursos(this);
+
+        //troca o painel
+        trocarParaPainel(lista);
+    }
+
+    public void mostrarListaFinanceiro() {
+        //Instancia o painel da lista
+        PanelFinanceiro lista = new PanelFinanceiro(this);
 
         //troca o painel
         trocarParaPainel(lista);

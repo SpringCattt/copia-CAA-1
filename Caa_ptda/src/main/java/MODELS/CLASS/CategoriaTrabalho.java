@@ -5,7 +5,8 @@ public class CategoriaTrabalho {
     private int idCategoria;
     private String nome;
 
-    public CategoriaTrabalho() {}
+    public CategoriaTrabalho() {
+    }
 
     public CategoriaTrabalho(int idCategoria, String nome) {
         this.idCategoria = idCategoria;
@@ -27,4 +28,10 @@ public class CategoriaTrabalho {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    @Override
+    public String toString() {
+        return this.getNome();
+    }
+
 }

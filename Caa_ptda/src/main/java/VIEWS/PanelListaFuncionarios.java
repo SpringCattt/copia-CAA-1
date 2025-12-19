@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package VIEWS;
 
-import CONTROLLERS.HomeController;
-import MODELS.CLASS.Trabalhador;
-import java.util.List;
-import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author gonca
@@ -16,40 +8,15 @@ public class PanelListaFuncionarios extends javax.swing.JPanel {
 
     //variável para guardar a referência da janela principal
     private PaginaInicial janelaPrincipal;
-    private HomeController controller;
+
     /**
      * Creates new form ListaFuncionarios
      */
-    
     //construtor para receber a PaginaInicial
     public PanelListaFuncionarios(PaginaInicial paginaInicial) {
         // Guarda a referência na variável que criámos em cima
         this.janelaPrincipal = paginaInicial;
-        this.controller = new HomeController();
         initComponents();
-        
-        carregarDadosTabela();
-    }
-    
-    private void carregarDadosTabela() {
-        // obtem o modelo da BD para alterar
-        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-        
-        // limpa a tabela pra evitar duplicados
-        modelo.setRowCount(0);
-        
-        // pede a lista de funcionarios ao controller
-        List<Trabalhador> lista = controller.obterTodosFuncionarios();
-        
-        // mete os funcionarios na lista
-        for (Trabalhador t : lista) {
-            modelo.addRow(new Object[]{
-                t.getIdTrabalhador(),
-                t.getNome(),
-                t.getEmailPessoal(),
-                t.getCategoria()
-            });
-        }
     }
 
     /**
@@ -65,6 +32,10 @@ public class PanelListaFuncionarios extends javax.swing.JPanel {
         jTable1 = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         btnCriar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnEditar1 = new javax.swing.JButton();
+
+        setBackground(new java.awt.Color(232, 235, 238));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -111,6 +82,26 @@ public class PanelListaFuncionarios extends javax.swing.JPanel {
             }
         });
 
+        btnEditar.setBackground(new java.awt.Color(51, 121, 232));
+        btnEditar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnEditar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        btnEditar1.setBackground(new java.awt.Color(51, 121, 232));
+        btnEditar1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnEditar1.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditar1.setText("Eliminar");
+        btnEditar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -118,7 +109,12 @@ public class PanelListaFuncionarios extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnCriar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnEditar1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCriar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -132,7 +128,10 @@ public class PanelListaFuncionarios extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(btnCriar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCriar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditar1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -155,17 +154,41 @@ public class PanelListaFuncionarios extends javax.swing.JPanel {
         );*/
 
         //dispose();
-        
-        if(janelaPrincipal != null){
+        if (janelaPrincipal != null) {
             janelaPrincipal.irParaFormularioFuncionarios();
         }
-        
-        
+
+
     }//GEN-LAST:event_btnCriarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        int linhaSelecionada = jTable1.getSelectedRow();
+
+        if (linhaSelecionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, selecione um funcionário na tabela pra editar.");
+            return;
+        }
+
+        //Obtem os dados da tabela
+        String id = jTable1.getValueAt(linhaSelecionada, 0).toString();
+        String nome = jTable1.getValueAt(linhaSelecionada, 1).toString();
+        String email = jTable1.getValueAt(linhaSelecionada, 2).toString();
+        String categoria = jTable1.getValueAt(linhaSelecionada, 3).toString();
+
+        if (janelaPrincipal != null) {
+            janelaPrincipal.irParaEditarFuncionario(id, nome, email, categoria);
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnEditar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditar1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCriar;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEditar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;

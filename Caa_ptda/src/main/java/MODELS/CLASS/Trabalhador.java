@@ -18,19 +18,19 @@ public class Trabalhador {
     private String EmailTrabalho;
     private int Categoria;
     private String Password;
-    private boolean Atividade;
+    private boolean Ativo;
 
     private static List<Trabalhador> trabalhadores = new ArrayList<>();
     private static int nextId = 1;
     
     public Trabalhador(){}
     
-    public Trabalhador(int id, String nome, String emailPessoal, int categoria, boolean atividade) {
+    public Trabalhador(int id, String nome, String emailPessoal, int categoria, boolean ativo) {
         this.IdTrabalhador = id;
         this.Nome = nome;
         this.EmailPessoal = emailPessoal;
         this.Categoria = categoria;
-        this.Atividade = atividade;
+        this.Ativo = ativo;
     }
       
     /* 
@@ -68,12 +68,12 @@ public class Trabalhador {
         this.Categoria = Categoria;
     }
 
-    public boolean isAtividade() {
-        return Atividade;
+    public boolean isAtivo() {
+        return Ativo;
     }
 
-    public void setAtividade(boolean Atividade) {
-        this.Atividade = Atividade;
+    public void setAtivo(boolean Ativo) {
+        this.Ativo = Ativo;
     }
     
     /* 
@@ -89,7 +89,7 @@ public class Trabalhador {
         System.out.println("Nome: " + t.getNome());
         System.out.println("Email pessoal: " + t.getEmailPessoal());
         System.out.println("Categoria: " + t.getCategoria());
-        System.out.println("Atividade: " + t.isAtividade());
+        System.out.println("Ativo: " + t.isAtivo());
 
         return t;
     }

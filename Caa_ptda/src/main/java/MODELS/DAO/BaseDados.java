@@ -9,10 +9,9 @@ public class BaseDados {
     private static int contador=0;
 
     public static Connection getConnection() throws SQLException {
-    contador++;
-    if(con == null || con.isClosed()){ 
-        con = DriverManager.getConnection(URL, USER, PASSWORD);
+        if (con == null || con.isClosed()) {
+            con = DriverManager.getConnection(URL, USER, PASSWORD);
         }
-    return con; 
+        return con;
     }
 }

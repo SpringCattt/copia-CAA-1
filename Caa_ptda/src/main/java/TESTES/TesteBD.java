@@ -157,7 +157,7 @@ public class TesteBD {
             t.setNome("Diana Operacional");
             t.setCategoria(idCategoria);
             t.setEmailPessoal("diana@empresa.pt");
-            t.setAtividade(true);
+            t.setAtivo(true);
             generatedId = tDAO.insertTrabalhador(t);
             System.out.println("  INSERT Trabalhador: ID gerado -> " + generatedId);
         } catch (Exception e) { System.err.println("  ERRO no TrabalhadorDAO: " + e.getMessage()); }
